@@ -90,7 +90,7 @@ fn main() {
             let tree = Expr::parse_tree(&re).unwrap();
             let text = args.next().expect("expected text argument");
             let a = analyze(&tree, false).unwrap();
-            let p = compile(&a, true, tree.contains_subroutines).unwrap();
+            let p = compile(&a, true, tree.contains_subroutines, Default::default()).unwrap();
             run_trace(&p, &text, 0).unwrap();
         } else if cmd == "graph" {
             let re = args.next().expect("expected regexp argument");
@@ -150,6 +150,7 @@ fn prog(re: &str) -> Prog {
         &result,
         can_compile_as_anchored(&tree.expr),
         tree.contains_subroutines,
+        Default::default(),
     )
     .expect("Expected compile to succeed")
 }

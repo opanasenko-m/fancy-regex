@@ -387,8 +387,9 @@ impl<'r, 'h> Iterator for SplitN<'r, 'h> {
 
 impl<'r, 'h> core::iter::FusedIterator for SplitN<'r, 'h> {}
 
+/// Options for configuring regex compilation.
 #[derive(Clone, Debug)]
-struct RegexOptions {
+pub struct RegexOptions {
     syntaxc: SyntaxConfig,
     delegate_size_limit: Option<usize>,
     delegate_dfa_size_limit: Option<usize>,
@@ -659,6 +660,7 @@ impl Regex {
             &info,
             can_compile_as_anchored(&tree.expr),
             tree.contains_subroutines,
+            options.clone(),
         )?;
         Ok(Regex {
             inner: RegexImpl::Fancy {
